@@ -323,7 +323,30 @@ Bookinfo application: (yamls\istio)
 ===========================================================================================================================================================================================
 11 Example use cases of ISTIO:(reviews microservice versions: v1-blank, v2-black stars, v3-red stars)
 
-   11.1 The reviews microservice in bookinfo app has three version(v1,v2,v3), lets see how to split the traffic among different versions of microservice.
+Note:  Reviews microservice in bookinfo app has threee versions, where v1 does not call ratings service, v2 calls rating returns all black star rating
+       and v3 calls rating service returns all red star rating.
+
+   11.1 Request routing or traffic shifting to a particular version of a microservice. (yamls/istio/usecase/)
+   
+        Lets route traffic coming from product page to reviews v2 subset and deny v1 and v3.
+	
+	kubectl apply -f virtual-service-reviews-all-v2.yaml -n bookinfo-istio
+	
+	To verify check in browser and kiali to verify the traffic flow.
+	
+   11.2 Weighted routing between different versions of a microservice. (yamls/istio/usecase/)
+        Lets route the traffic from productpage to reviews v2 and v3 subset, here we will split the traffic as below:
+	90% ==> v2
+	10% ==> v3
+	
+	kubectl apply -f virtual-service-reviews-weighted-v2-90-v3-10.yaml -n bookinfo-istio
+        
+        To verify check in browser and kiali to verify the traffic flow.
+	
+   11.3  
+        
+   
+   The reviews microservice in bookinfo app has three version(v1,v2,v3), lets see how to split the traffic among different versions of microservice.
         lets create a virtualservice to send all the traffic coming from productpage to reviews v2 version (all black stars)
         and deny to v1 and v3.
   
