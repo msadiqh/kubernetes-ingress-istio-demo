@@ -275,31 +275,31 @@
 
 Hipster Shop: Cloud-Native Microservices Demo Application 
 	
-  9.1 kubectl create namespace hipster
+  9.1 kubectl create namespace hipster-ingress
       git clone https://github.com/GoogleCloudPlatform/microservices-demo.git
-      cd release and kubectl apply -f kubernetes-manifests.yaml -n hipster
+      cd release and kubectl apply -f kubernetes-manifests.yaml -n hipster-ingress
 		
   9.2 create ingress resource to allow http traffic on port 80.(yamls\ingress\hipster-ingress.yaml)
-      kubectl apply -f hipster-ingress.yaml -n hipster
-      kubectl get ingress -n hipster
+      kubectl apply -f hipster-ingress.yaml -n hipster-ingress
+      kubectl get ingress -n hipster-ingress
 		
   9.3 Create CNAME  DNS entry for nginx controller in dns server to access the application. 
 	
-  9.4 Access the application http://hipster.devops.com
+  9.4 Access the application http://hipster-ingress.devops.com
 	
 Bookinfo application: 
 
-  9.5 kubectl create namespace bookinfo
+  9.5 kubectl create namespace bookinfo-ingress
       git clone https://github.com/istio/istio.git
-      cd istio kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml -n bookinfo
+      cd istio kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml -n bookinfo-ingress
 		 
   9.6 create ingress resource to allow http traffic on port 80.(yamls\ingress\bookinfo-ingress.yaml)
-      kubectl apply -f bookinfo-ingress.yaml -n bookinfo
-      kubectl get ingress -n bookinfo
+      kubectl apply -f bookinfo-ingress.yaml -n bookinfo-ingress
+      kubectl get ingress -n bookinfo-ingress
 		 
   9.7 Create CNAME DNS entry for nginx controller in dns server to access the application. 
 	
-  9.8 Access the application http://bookinfo.devops.com/productpage
+  9.8 Access the application http://bookinfo-ingress.devops.com/productpage
 	
 ==========================================================================================================================================================================================
 ==========================================================================================================================================================================================
