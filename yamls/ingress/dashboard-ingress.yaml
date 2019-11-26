@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  name: ingress-dashboard
+  namespace: default
+spec:
+  rules:
+  - host: kubernetes-dashboard.devops.com
+    http:
+      paths:
+      - backend:
+          serviceName: my-dashboard-kubernetes-dashboard
+          servicePort: 443
+status:
+  loadBalancer:
+    ingress:
+    - {}

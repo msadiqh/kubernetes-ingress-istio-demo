@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  namespace: hipster
+  annotations:
+   kubernetes.io/ingress.class: nginx
+  name: hipster
+spec:
+  rules:
+  - host: hipster.devops.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: frontend
+          servicePort: 80
+          
+
+          

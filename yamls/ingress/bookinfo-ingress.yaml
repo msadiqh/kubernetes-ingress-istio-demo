@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  namespace: bookinfo
+  annotations:
+   kubernetes.io/ingress.class: nginx
+  name: bookinfo
+spec:
+  rules:
+  - host: bookinfo.devops.com
+    http:
+      paths:
+      - path: /productpage
+        backend:
+          serviceName: productpage
+          servicePort: 9080 
