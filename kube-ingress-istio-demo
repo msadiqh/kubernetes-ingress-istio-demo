@@ -343,7 +343,8 @@ Note:  Reviews microservice in bookinfo app has threee versions, where v1 does n
         
         To verify check in browser and kiali to verify the traffic flow.
 	
-   11.3 Routing based on http header match to a particular version of service.
+   11.3 Route based on user identity to a particular version of service.
+   
         Lets route traffic from productpage service to reviews v2 if the http hearder for 'end-user' match the value 'sadiqh' or
 	else route the traffic to v3 version of reviews service.
 	
@@ -351,7 +352,48 @@ Note:  Reviews microservice in bookinfo app has threee versions, where v1 does n
 	
         To verify check in browser, all traffic will route to reviews v3 service (red star rating) and route to reviews v2 service (black star rating) only when user 'sadiqh' logs in.
 	
-   11.4 
+   11.4 Injecting an HTTP delay fault:
+        11.4.1 Before injecting the http delay, lets configure routing rules as below.
+	       kubectl apply -f samples/bookinfo/networking/virtual-service-all-v1.yaml
+               kubectl apply -f samples/bookinfo/networking/virtual-service-reviews-test-v2.yaml
+	
+	      With the above configuration, this is how requests flow:
+
+              productpage → reviews:v2 → ratings (only for user sadiqh)
+              productpage → reviews:v1 (for everyone else)
+       
+       11.4.2 Below is the scenario:
+                                       (user:sadiqh)
+              reviews:v2 <== http fault injection, 7 sec delay ==> ratings 
+
+              reviews:v2 <==10s hard coded timeout==> ratings 
+
+              productpage <== 3s + 1 retry total 6s ==> reviews
+	      
+       11.4.3 Testing the delay configuration:
+              Open bookinfo app in browser, and login with user sadiqh.
+	      we expect the Bookinfo home page to load without errors in approximately 7 seconds, but we are faced with below error.
+	      
+	      Error fetching product reviews!
+              Sorry, product reviews are currently unavailable for this book.
+	      
+	      View the web page response times:
+              Open the Developer Tools menu in you web browser.Open the Network tab and Reload the /productpage web page. 
+	      You will see that the page actually loads in about 6 seconds.
+	      
+	      As expected, the 7s delay you introduced doesn’t affect the reviews service because the timeout between the reviews and ratings service is hard-coded at 10s. 
+	      However, there is also a hard-coded timeout between the productpage and the reviews service, coded as 3s + 1 retry for 6s total.
+	      As a result, the productpage call to reviews times out prematurely and throws an error after 6s.
+	      
+      11.4.4 Fixing the bug: Either increasing the productpage to reviews service timeout or decreasing the reviews to ratings timeout
+      
+  11.5  
+	
+	
+   
+   
+   
+   
    The reviews microservice in bookinfo app has three version(v1,v2,v3), lets see how to split the traffic among different versions of microservice.
         lets create a virtualservice to send all the traffic coming from productpage to reviews v2 version (all black stars)
         and deny to v1 and v3.
