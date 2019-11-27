@@ -365,6 +365,10 @@ Note:  Reviews microservice in bookinfo app has threee versions, where v1 does n
 
               productpage → reviews:v2 → ratings (only for user sadiqh)
               productpage → reviews:v1 (for everyone else)
+	      
+	      Create a fault injection rule to delay traffic coming from the test user sadiqh
+	      
+	      kubectl apply -f virtual-service-ratings-test-delay.yaml -n bookinfo-istio
        
        11.4.2 Below is the scenario:
                                        (user:sadiqh)
