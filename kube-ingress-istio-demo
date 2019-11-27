@@ -126,7 +126,7 @@
 ==========================================================================================================================================================================================
 ==========================================================================================================================================================================================			  
 
-4 Configure NFS client provisioner to dynamically create PVs from storage class, yamls are in /yamls/nfs-provisioner/
+4 Configure NFS client provisioner to dynamically create PVs from storage class, yamls are in kubernetes-ingress-istio-demo/yamls/nfs-provisioner/
   
   4.1 Create a service account 'nfs-client-provisioner', ClusterRole,ClusterRoleBinding,Role and RoleBinding (rbac.yaml)
       
@@ -156,7 +156,7 @@
 ==========================================================================================================================================================================================
 ==========================================================================================================================================================================================	
 
-5 Configure MetalLB load-balancer for bare metal Kubernetes cluster, yamls are in yamls/metallb/
+5 Configure MetalLB load-balancer for bare metal Kubernetes cluster, yamls are in  kubernetes-ingress-istio-demo/yamls/metallb/
   reference:https://metallb.universe.tf/installation/
 
   5.1 To install MetalLB, apply the manifest:
@@ -171,7 +171,7 @@
 ==========================================================================================================================================================================================
 ==========================================================================================================================================================================================		
 
-6 Configure kubernetes dashboard to manage cluster using GUI. yamls are in yamls/kubernetes-dashboard/sa_cluster_admin.yaml
+6 Configure kubernetes dashboard to manage cluster using GUI. (kubernetes-ingress-istio-demo/yamls/kubernetes-dashboard/)
   Reference:https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/
   
   6.1 Install kubernetes dashboard using kubectl 
@@ -231,7 +231,7 @@
 	    
 ==========================================================================================================================================================================================
 ==========================================================================================================================================================================================
-8 Configure cluster monitoring using prometheus and grafana.
+8 Configure cluster monitoring using prometheus and grafana.(kubernetes-ingress-istio-demo/helm/)
 
   8.1 Install prometheus using helm.
   
@@ -239,7 +239,7 @@
 	    helm inspect values stable/prometheus > C:\sadiqh\kubernetes\helm\prometheus.values
 	    type: LoadBalancer
 			  
-      8.1.2 helm install --name my-prometheus stable/prometheus --values helm\prometheus.values --namespace prometheus
+      8.1.2 helm install --name my-prometheus stable/prometheus --values prometheus.values --namespace prometheus
             kubectl get all -n prometheus (service is of type loadbalancer, check if IP got assigned by metallb)
 			  
       8.1.3 During the prometheus install, it will create two Persistant volumes dynamically since we configured NFS storage backend and defined storageclass (managed-nfs-storage)
@@ -258,7 +258,7 @@
 	    adminPassword: grafana123
 	    enabled: true
 			  
-      8.2.2 helm install --name my-grafana stable/grafana --values helm\grafana.values --namespace grafana
+      8.2.2 helm install --name my-grafana stable/grafana --values grafana.values --namespace grafana
             kubectl get all -n grafana (service is of type loadbalancer, check if IP got assigned by metallb)
 		
       8.2.3 During the grafana install, it will create one Persistant volume dynamically since we configured NFS storage backend and defined storageclass (managed-nfs-storage)
@@ -272,6 +272,7 @@
 ==========================================================================================================================================================================================
 ==========================================================================================================================================================================================			  
 9 Exposing cluster services to be accessed outside the cluster using nginx ingress controller,We will deploy applications in seperate namespace, not in default.
+  (kubernetes-ingress-istio-demo/yamls/ingress/)
 
 Hipster Shop: Cloud-Native Microservices Demo Application 
 	
@@ -279,7 +280,7 @@ Hipster Shop: Cloud-Native Microservices Demo Application
       git clone https://github.com/GoogleCloudPlatform/microservices-demo.git
       cd release and kubectl apply -f kubernetes-manifests.yaml -n hipster-ingress
 		
-  9.2 create ingress resource to allow http traffic on port 80.(yamls\ingress\hipster-ingress.yaml)
+  9.2 create ingress resource to allow http traffic on port 80.
       kubectl apply -f hipster-ingress.yaml -n hipster-ingress
       kubectl get ingress -n hipster-ingress
 		
@@ -293,7 +294,7 @@ Bookinfo application:
       git clone https://github.com/istio/istio.git
       cd istio kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml -n bookinfo-ingress
 		 
-  9.6 create ingress resource to allow http traffic on port 80.(yamls\ingress\bookinfo-ingress.yaml)
+  9.6 create ingress resource to allow http traffic on port 80.
       kubectl apply -f bookinfo-ingress.yaml -n bookinfo-ingress
       kubectl get ingress -n bookinfo-ingress
 		 
@@ -305,7 +306,7 @@ Bookinfo application:
 ==========================================================================================================================================================================================
 10 Exposing cluster services to be accessed outside the cluster using ISTIO service mesh,We will deploy applications in seperate namespace, not in default.
 	
-Bookinfo application: (yamls\istio)
+Bookinfo application: (kubernetes-ingress-istio-demo/yamls/istio/)
 
   10.5 kubectl create namespace bookinfo-istio
        kubectl label namespace bookinfo-istio istio-injection=enabled
@@ -322,11 +323,12 @@ Bookinfo application: (yamls\istio)
 ===========================================================================================================================================================================================
 ===========================================================================================================================================================================================
 11 Example use cases for ISTIO:(reviews microservice versions: v1-blank, v2-black stars, v3-red stars)
+   (kubernetes-ingress-istio-demo/yamls/istio/usecase/)
 
 Note:  Reviews microservice in bookinfo app has threee versions, where v1 does not call ratings service, v2 calls rating returns all black star rating
        and v3 calls rating service returns all red star rating.
 
-   11.1 Request routing or traffic shifting to a particular version of a microservice. (yamls/istio/usecase/)
+   11.1 Request routing or traffic shifting to a particular version of a microservice.
    
         Lets route traffic coming from product page to reviews v2 subset and deny v1 and v3.
 	
@@ -334,7 +336,7 @@ Note:  Reviews microservice in bookinfo app has threee versions, where v1 does n
 	
 	To verify check in browser and kiali to verify the traffic flow.
 	
-   11.2 Weighted routing between different versions of a microservice. (yamls/istio/usecase/)
+   11.2 Weighted routing between different versions of a microservice. 
         Lets route the traffic from productpage to reviews v2 and v3 subset, here we will split the traffic as below:
 	90% ==> v2
 	10% ==> v3
@@ -352,7 +354,7 @@ Note:  Reviews microservice in bookinfo app has threee versions, where v1 does n
 	
         To verify check in browser, all traffic will route to reviews v3 service (red star rating) and route to reviews v2 service (black star rating) only when user 'sadiqh' logs in.
 	
-   11.4 Injecting an HTTP delay fault:(yamls/istio/usecase/)
+   11.4 Injecting an HTTP delay fault:
    
         11.4.1 Before injecting the http delay, lets configure routing rules as below.
 	
