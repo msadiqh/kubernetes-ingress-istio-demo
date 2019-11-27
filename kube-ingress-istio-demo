@@ -334,7 +334,7 @@ Note:  Reviews microservice in bookinfo app has threee versions, where v1 does n
 	
 	kubectl apply -f virtual-service-reviews-all-v2.yaml -n bookinfo-istio
 	
-	To verify check in browser and kiali to verify the traffic flow.
+	To verify check bookinfo app in browser and kiali to verify the traffic flow.
 	
    11.2 Weighted routing between different versions of a microservice. 
         Lets route the traffic from productpage to reviews v2 and v3 subset, here we will split the traffic as below:
@@ -343,7 +343,7 @@ Note:  Reviews microservice in bookinfo app has threee versions, where v1 does n
 	
 	kubectl apply -f virtual-service-reviews-weighted-v2-90-v3-10.yaml -n bookinfo-istio
         
-        To verify check in browser and kiali to verify the traffic flow.
+        To verify check bookinfo app in browser and kiali to verify the traffic flow.
 	
    11.3 Route based on user identity to a particular version of service.
    
@@ -352,7 +352,7 @@ Note:  Reviews microservice in bookinfo app has threee versions, where v1 does n
 	
 	kubectl apply -f virtual-service-reviews-sadiqh-v2.yaml -n bookinfo-istio
 	
-        To verify check in browser, all traffic will route to reviews v3 service (red star rating) and route to reviews v2 service (black star rating) only when user 'sadiqh' logs in.
+        To verify check the bookinfo app in browser, all traffic will route to reviews v3 service (red star rating) and route to reviews v2 service (black star rating) only when user 'sadiqh' logs in.
 	
    11.4 Injecting an HTTP delay fault:
    
@@ -411,6 +411,35 @@ Note:  Reviews microservice in bookinfo app has threee versions, where v1 does n
             kubectl apply -f virtual-service-reviews-mirror-v2-v3.yaml -n bookinfo-istio
             Generate traffic to bookinfo application using below command and visualize the traffic flow in kiali dashboard.
             watch curl -s -o /dev/null http://bookinfo-istio.devops.com
+============================================================================================================================================================================================================
+============================================================================================================================================================================================================
+
+Note: Add entries in /etc/hosts
+#Kubernetes cluster nodes
+
+192.168.0.30    kubemaster.devops.com   kubemaster
+192.168.0.31    kubenode01.devops.com   kubenode01
+192.168.0.32    kubenode02.devops.com   kubenode02
+
+DNS entries:
+
+kubemaster	Host (A)	192.168.0.30	static
+kubenode01	Host (A)	192.168.0.31	static
+kubenode02	Host (A)	192.168.0.32	static
+
+nginx-controller	     Host (A)		    192.168.0.xx	
+hipster	Alias 		     (CNAME)		    nginx-controller.devops.com	
+bookinfo Alias               (CNAME)	            nginx-controller.devops.com	
+
+kubernetes-dashboard	    Host (A)	            192.168.0.xx	
+grafana	                    Host (A)	            192.168.0.xx	
+prometheus	            Host (A)	            192.168.0.xx	
+grafana-istio	            Host (A)	            192.168.0.xx	
+kiali-istio	            Host (A)	            192.168.0.xx
+
+istio-ingressgateway	    Host (A)	            192.168.0.xx	
+bookinfo-istio	Alias       (CNAME)	            istio-ingressgateway.devops.com	
+
        
  
   
