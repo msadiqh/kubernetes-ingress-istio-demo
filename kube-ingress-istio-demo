@@ -284,7 +284,7 @@ Hipster Shop: Cloud-Native Microservices Demo Application
       kubectl apply -f hipster-ingress.yaml -n hipster-ingress
       kubectl get ingress -n hipster-ingress
 		
-  9.3 Create CNAME  DNS entry for nginx controller in dns server to access the application. 
+  9.3 Create CNAME (hipster-ingress.devops.com) DNS entry for nginx controller in dns server to access the application. 
 	
   9.4 Access the application http://hipster-ingress.devops.com
 	
@@ -298,7 +298,7 @@ Bookinfo application:
       kubectl apply -f bookinfo-ingress.yaml -n bookinfo-ingress
       kubectl get ingress -n bookinfo-ingress
 		 
-  9.7 Create CNAME DNS entry for nginx controller in dns server to access the application. 
+  9.7 Create CNAME (bookinfo-ingress.devops.com) DNS entry for nginx controller in dns server to access the application. 
 	
   9.8 Access the application http://bookinfo-ingress.devops.com/productpage
 	
@@ -428,8 +428,8 @@ kubenode01	Host (A)	192.168.0.31	static
 kubenode02	Host (A)	192.168.0.32	static
 
 nginx-controller	     Host (A)		    192.168.0.xx	
-hipster	Alias 		     (CNAME)		    nginx-controller.devops.com	
-bookinfo Alias               (CNAME)	            nginx-controller.devops.com	
+hipster-ingress	 Alias 	     (CNAME)		    nginx-controller.devops.com	
+bookinfo-ingress  Alias      (CNAME)	            nginx-controller.devops.com	
 
 kubernetes-dashboard	    Host (A)	            192.168.0.xx	
 grafana	                    Host (A)	            192.168.0.xx	
