@@ -321,7 +321,7 @@ Bookinfo application: (yamls\istio)
   
 ===========================================================================================================================================================================================
 ===========================================================================================================================================================================================
-11 Example use cases of ISTIO:(reviews microservice versions: v1-blank, v2-black stars, v3-red stars)
+11 Example use cases for ISTIO:(reviews microservice versions: v1-blank, v2-black stars, v3-red stars)
 
 Note:  Reviews microservice in bookinfo app has threee versions, where v1 does not call ratings service, v2 calls rating returns all black star rating
        and v3 calls rating service returns all red star rating.
@@ -352,10 +352,12 @@ Note:  Reviews microservice in bookinfo app has threee versions, where v1 does n
 	
         To verify check in browser, all traffic will route to reviews v3 service (red star rating) and route to reviews v2 service (black star rating) only when user 'sadiqh' logs in.
 	
-   11.4 Injecting an HTTP delay fault:
+   11.4 Injecting an HTTP delay fault:(yamls/istio/usecase/)
+   
         11.4.1 Before injecting the http delay, lets configure routing rules as below.
-	       kubectl apply -f samples/bookinfo/networking/virtual-service-all-v1.yaml
-               kubectl apply -f samples/bookinfo/networking/virtual-service-reviews-test-v2.yaml
+	
+	      kubectl apply -f virtual-service-all-v1.yaml -n bookinfo-istio
+              kubectl apply -f virtual-service-reviews-test-v2.yaml -n bookinfo-istio
 	
 	      With the above configuration, this is how requests flow:
 
@@ -387,24 +389,28 @@ Note:  Reviews microservice in bookinfo app has threee versions, where v1 does n
 	      
       11.4.4 Fixing the bug: Either increasing the productpage to reviews service timeout or decreasing the reviews to ratings timeout
       
-  11.5  
-	
-	
-   
-   
-   
-   
-   The reviews microservice in bookinfo app has three version(v1,v2,v3), lets see how to split the traffic among different versions of microservice.
-        lets create a virtualservice to send all the traffic coming from productpage to reviews v2 version (all black stars)
-        and deny to v1 and v3.
-  
-       kubectl apply -f virtual-service-all-v2.yaml -n bookinfo-istio
-  
-       Generate traffic to bookinfo application using below command and visualize the traffic flow in kiali dashboard.
-  
-       watch curl -s -o /dev/null http://bookinfo-istio.devops.com
+ 11.5 Injecting an HTTP abort fault:
+      
+      11.5.1 Test microservice resiliency by injecting an HTTP abort fault. 
+             we will introduce an HTTP abort to the ratings microservices for the test user sadiqh.
+             In this case, the page to load immediately and display the Ratings service is currently unavailable message.
+
+      11.5.2 Create a fault injection rule to send an HTTP abort for user sadiqh.
+             
+	     kubectl apply -f virtual-service-ratings-test-abort.yaml -n bookinfo-istio
+	     
+      11.5.3 Testing the abort configuration:
+             Login to bookinfo app with user sadiqh,the page loads immediately and the Ratings service is currently unavailable message appears.
+	     
+11.6 Mirroring traffic to particular version:
+     
+     11.6.1 Lets mirror 50% of traffic coming to reviews:v2 to reviews:v3
+     
+            kubectl apply -f virtual-service-reviews-mirror-v2-v3.yaml -n bookinfo-istio
+            Generate traffic to bookinfo application using below command and visualize the traffic flow in kiali dashboard.
+            watch curl -s -o /dev/null http://bookinfo-istio.devops.com
        
-   11.2 Route the traffic to a particular microservice based on the header value.
+ 
   
 
 
