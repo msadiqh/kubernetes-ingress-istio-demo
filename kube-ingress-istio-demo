@@ -202,11 +202,13 @@ Table of content:
       6.1.3 Edit kubernetes-dashboard service and change service type to LoadBalancer.
 	    kubectl edit svc kubernetes-dashboard -n kubernetes-dashboard
 	    
+      6.1.4 Create A record DNS entry 'kubernetes-dashboard.devops.com' with external IP assigned by metallb
+            kubectl get svc kubernetes-dashboard -n kubernetes-dashboard
+	    
 	    Execute following command to get the token to login the dashboard.
 	    kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep admin-user | awk '{print $1}')
 			  
-	    Get the external IP assigned by metallb and add A record to DNS to access the kubernetes dashboard
-	    kubectl get svc kubernetes-dashboard -n kubernetes-dashboard
+      6.1.5 Login to kubernetes dashboard with below url.
 	    https://kubernetes-dashboard.devops.com
 		
 ==========================================================================================================================================================================================
