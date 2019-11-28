@@ -347,7 +347,7 @@ Bookinfo application:
 Note:  Reviews microservice in bookinfo app has threee versions, where v1 does not call ratings service, v2 calls rating returns all black star rating
        and v3 calls rating service returns all red star rating.
 
-   11.1 Request routing or traffic shifting to a particular version of a microservice.
+   11.1 Request routing or traffic shifting to a particular version of a microservice. (blue-green deployment)
    
         Lets route traffic coming from product page to reviews v2 subset and deny v1 and v3.
 	
@@ -355,7 +355,7 @@ Note:  Reviews microservice in bookinfo app has threee versions, where v1 does n
 	
 	To verify check bookinfo app in browser and kiali to verify the traffic flow.
 	
-   11.2 Weighted routing between different versions of a microservice. 
+   11.2 Weighted routing between different versions of a microservice. (canary deployment)
         Lets route the traffic from productpage to reviews v2 and v3 subset, here we will split the traffic as below:
 	90% ==> v2
 	10% ==> v3
