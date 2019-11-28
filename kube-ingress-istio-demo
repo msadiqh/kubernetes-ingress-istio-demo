@@ -418,6 +418,7 @@ Note:  Reviews microservice in bookinfo app has threee versions, where v1 does n
 ============================================================================================================================================================================================================
 NOTES:
 
+Scaling deployments: kubectl scale --replicas=0 deployment deployment-name -n namespace
 Generate traffic to bookinfo application using below command.
 watch curl -s -o /dev/null http://bookinfo-istio.devops.com
 
