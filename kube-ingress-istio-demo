@@ -271,36 +271,36 @@
 			  
 ==========================================================================================================================================================================================
 ==========================================================================================================================================================================================			  
-9 Exposing cluster services to be accessed outside the cluster using nginx ingress controller,We will deploy applications in seperate namespace, not in default.
+9 Exposing services to be accessed outside the cluster using nginx ingress controller,We will deploy applications in seperate namespace, not in default.
   (kubernetes-ingress-istio-demo/yamls/ingress/)
 
 Hipster Shop: Cloud-Native Microservices Demo Application 
 	
-  9.1 kubectl create namespace hipster-ingress
+  9.1 kubectl create namespace hipster-nginx
       git clone https://github.com/GoogleCloudPlatform/microservices-demo.git
-      cd release and kubectl apply -f kubernetes-manifests.yaml -n hipster-ingress
+      cd release and kubectl apply -f kubernetes-manifests.yaml -n hipster-nginx
 		
   9.2 create ingress resource to allow http traffic on port 80.
-      kubectl apply -f hipster-ingress.yaml -n hipster-ingress
-      kubectl get ingress -n hipster-ingress
+      kubectl apply -f hipster-ingress.yaml 
+      kubectl get ingress -n hipster-nginx
 		
-  9.3 Create CNAME (hipster-ingress.devops.com) DNS entry for nginx controller in dns server to access the application. 
+  9.3 Create CNAME (hipster-nginx.devops.com) DNS entry for nginx ingress controller in dns server to access the application. 
 	
-  9.4 Access the application http://hipster-ingress.devops.com
+  9.4 Access the application http://hipster-nginx.devops.com
 	
 Bookinfo application: 
 
-  9.5 kubectl create namespace bookinfo-ingress
+  9.5 kubectl create namespace bookinfo-nginx
       git clone https://github.com/istio/istio.git
-      cd istio kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml -n bookinfo-ingress
+      cd istio kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml -n bookinfo-nginx
 		 
   9.6 create ingress resource to allow http traffic on port 80.
-      kubectl apply -f bookinfo-ingress.yaml -n bookinfo-ingress
-      kubectl get ingress -n bookinfo-ingress
+      kubectl apply -f bookinfo-ingress.yaml 
+      kubectl get ingress -n bookinfo-nginx
 		 
-  9.7 Create CNAME (bookinfo-ingress.devops.com) DNS entry for nginx controller in dns server to access the application. 
+  9.7 Create CNAME (bookinfo-nginx.devops.com) DNS entry for nginx ingress controller in dns server to access the application. 
 	
-  9.8 Access the application http://bookinfo-ingress.devops.com/productpage
+  9.8 Access the application http://bookinfo-nginx.devops.com/productpage
 	
 ==========================================================================================================================================================================================
 ==========================================================================================================================================================================================
@@ -322,7 +322,7 @@ Bookinfo application: (kubernetes-ingress-istio-demo/yamls/istio/)
   
 ===========================================================================================================================================================================================
 ===========================================================================================================================================================================================
-11 Example use cases for ISTIO:(reviews microservice versions: v1-blank, v2-black stars, v3-red stars)
+11 Example use cases for ISTIO:(reviews microservice versions: v1- no rating, v2-black stars, v3-red stars)
    (kubernetes-ingress-istio-demo/yamls/istio/usecase/)
 
 Note:  Reviews microservice in bookinfo app has threee versions, where v1 does not call ratings service, v2 calls rating returns all black star rating
@@ -413,12 +413,15 @@ Note:  Reviews microservice in bookinfo app has threee versions, where v1 does n
      11.6.1 Lets mirror 50% of traffic coming to reviews:v2 to reviews:v3
      
             kubectl apply -f virtual-service-reviews-mirror-v2-v3.yaml -n bookinfo-istio
-            Generate traffic to bookinfo application using below command and visualize the traffic flow in kiali dashboard.
-            watch curl -s -o /dev/null http://bookinfo-istio.devops.com
+            
 ============================================================================================================================================================================================================
 ============================================================================================================================================================================================================
+NOTES:
 
-Note: Add entries in /etc/hosts
+Generate traffic to bookinfo application using below command.
+watch curl -s -o /dev/null http://bookinfo-istio.devops.com
+
+Add entries in /etc/hosts
 #Kubernetes cluster nodes
 
 192.168.0.30    kubemaster.devops.com   kubemaster
