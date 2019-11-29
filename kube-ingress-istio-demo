@@ -364,7 +364,7 @@ Note:  Reviews microservice in bookinfo app has threee versions, where v1 does n
         
         To verify check bookinfo app in browser and kiali to verify the traffic flow.
 	
-   11.3 Route based on user identity to a particular version of service.
+   11.3 Route based on user identity to a particular version of service. (A/B Testing)
    
         Lets route traffic from productpage service to reviews v2 if the http hearder for 'end-user' match the value 'sadiqh' or
 	else route the traffic to v3 version of reviews service.
