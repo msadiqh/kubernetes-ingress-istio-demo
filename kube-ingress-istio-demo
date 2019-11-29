@@ -242,12 +242,12 @@ Table of content:
       7.6.1 Setup grafana in istio service mesh.
             kubectl get svc -n istio-system and edit grafana service to 'type=Loadbalancer'
             Login to istio grafana dashboard by adding dns A record for external IP assigned by metallb.
-            http://grafana-istio.devops.com
+            http://grafana-istio.devops.com:3000
       
       7.6.2 Setup kiali in istio service mesh.
             kubectl get svc -n istio-system and edit kiali service to 'type=Loadbalancer'
 	    Login to istio kiali dashboard by adding dns A record for external IP assigned by metallb.
-	    http://kiali-istio.devops.com
+	    http://kiali-istio.devops.com:20001
 	    
 ==========================================================================================================================================================================================
 ==========================================================================================================================================================================================
