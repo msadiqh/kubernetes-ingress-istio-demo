@@ -1,0 +1,55 @@
+NOTES:
+
+Scaling deployments: kubectl scale --replicas=0 deployment deployment-name -n namespace
+Generate traffic to bookinfo application using below command.
+watch curl -s -o /dev/null http://bookinfo-istio.devops.com
+=========================================================================================================================================
+Add entries in /etc/hosts on all nodes
+#Kubernetes cluster nodes
+192.168.0.30    kubemaster.devops.com   kubemaster
+192.168.0.31    kubenode01.devops.com   kubenode01
+192.168.0.32    kubenode02.devops.com   kubenode02
+192.168.0.33    nfskubenode01.devops.com  nfskubenode01
+=========================================================================================================================================
+Set static IP in /etc/sysconfig/network-scripts/ifcfg-ensxxx for kubemaster,kubenode01,kubenode02 and nfskubenode01
+
+TYPE=Ethernet             TYPE=Ethernet             TYPE=Ethernet              TYPE=Ethernet
+DEVICE=ens192             DEVICE=ens192             DEVICE=ens192              DEVICE=ens160
+BOOTPROTO=static          BOOTPROTO=static          BOOTPROTO=static           BOOTPROTO=static
+IPADDR=192.168.0.30       IPADDR=192.168.0.31       IPADDR=192.168.0.32        IPADDR=192.168.0.33
+NETMASK=255.255.255.0     NETMASK=255.255.255.0     NETMASK=255.255.255.0      NETMASK=255.255.255.0
+GATEWAY=192.168.0.1       GATEWAY=192.168.0.1       GATEWAY=192.168.0.1        GATEWAY=192.168.0.1
+DNS1=192.168.0.20         DNS1=192.168.0.20         DNS1=192.168.0.20          DNS1=192.168.0.20
+DNS2=192.168.0.1          DNS2=192.168.0.1          DNS2=192.168.0.1           DNS2=192.168.0.1
+=========================================================================================================================================
+Add entries in /etc/resolv.conf on all nodes
+search devops.com
+nameserver 192.168.0.20
+nameserver 192.168.0.1
+=========================================================================================================================================
+Stop and disable NetworkManager, iptables, firewalld
+systemctl stop NetworkManager
+systemctl disable NetworkManager
+systemctl stop iptables
+systemctl disable iptables
+systemctl stop firewalld
+systemctl disable firewalld
+=========================================================================================================================================
+Have dns and domain setup in windows 2012 r2 server, configured with domain 'devops.com' and below dns entries.
+
+kubemaster	Host (A)	192.168.0.30	static
+kubenode01	Host (A)	192.168.0.31	static
+kubenode02	Host (A)	192.168.0.32	static
+
+nginx-controller	           Host (A)		    192.168.0.xx	
+hipster-ingress	 Alias 	     (CNAME)		    nginx-controller.devops.com	
+bookinfo-ingress  Alias      (CNAME)	      nginx-controller.devops.com	
+
+kubernetes-dashboard	      Host (A)	      192.168.0.xx	
+grafana	                    Host (A)	      192.168.0.xx	
+prometheus	                Host (A)	      192.168.0.xx	
+grafana-istio	              Host (A)	      192.168.0.xx	
+kiali-istio	                Host (A)	      192.168.0.xx
+
+istio-ingressgateway	      Host (A)	      192.168.0.xx	
+bookinfo-istio	Alias       (CNAME)	       istio-ingressgateway.devops.com	
