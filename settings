@@ -41,15 +41,15 @@ kubemaster	Host (A)	192.168.0.30	static
 kubenode01	Host (A)	192.168.0.31	static
 kubenode02	Host (A)	192.168.0.32	static
 
-nginx-controller	           Host (A)		    192.168.0.xx	
-hipster-ingress	 Alias 	     (CNAME)		    nginx-controller.devops.com	
-bookinfo-ingress  Alias      (CNAME)	      nginx-controller.devops.com	
+nginx-controller	             Host (A)		           192.168.0.xx	
+hipster-ingress	 Alias 	       (CNAME)		           nginx-controller.devops.com	
+bookinfo-ingress  Alias        (CNAME)	             nginx-controller.devops.com	
 
-kubernetes-dashboard	      Host (A)	      192.168.0.xx	
-grafana	                    Host (A)	      192.168.0.xx	
-prometheus	                Host (A)	      192.168.0.xx	
-grafana-istio	              Host (A)	      192.168.0.xx	
-kiali-istio	                Host (A)	      192.168.0.xx
+kubernetes-dashboard	        Host (A)	             192.168.0.xx	
+grafana	                      Host (A)	             192.168.0.xx	
+prometheus	                  Host (A)	             192.168.0.xx	
+grafana-istio	                Host (A)	             192.168.0.xx	
+kiali-istio	                  Host (A)	             192.168.0.xx
 
-istio-ingressgateway	      Host (A)	      192.168.0.xx	
-bookinfo-istio	Alias       (CNAME)	       istio-ingressgateway.devops.com	
+istio-ingressgateway	        Host (A)	             192.168.0.xx	
+bookinfo-istio	Alias         (CNAME)	               istio-ingressgateway.devops.com	
