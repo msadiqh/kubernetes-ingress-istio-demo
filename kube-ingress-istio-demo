@@ -76,7 +76,7 @@ Table of content:
 		  After configuring the path to helm binary, check the version to confirm (helm version).
 	          reference: https://get.helm.sh/helm-v3.0.0-rc.3-windows-amd64.zip
 			  
-	    2.2.2 INSTALLING TILLER: (yamls\tiller\tiller_sa_cluster_admin.yaml)
+	    2.2.2 INSTALLING TILLER: (kubernetes-ingress-istio-demo\yamls\tiller\tiller_sa_cluster_admin.yaml)
 		  Tiller, the server portion of Helm, typically runs inside of your Kubernetes cluster.
 		  The easiest way to install tiller into the cluster is simply to run helm init. 
 	          This will validate that helm’s local environment is set up correctly (and set it up if necessary). 
@@ -84,7 +84,7 @@ Table of content:
 		  Check tiller is running and create service account for tiller with cluster admin role.
 		  
                   kubectl get pods --namespace kube-system 
-                  kubectl apply -f yamls\tiller\tiller_sa_cluster_admin.yaml
+                  kubectl apply -f tiller_sa_cluster_admin.yaml
 			  
 	    2.2.3 After setting the environment for HELM package manager, verify with below commands.
 		  c:\>helm version
@@ -92,7 +92,7 @@ Table of content:
                   Server: &version.Version{SemVer:"v2.16.0", GitCommit:"e13bc94621d4ef666250cfbe534aaabf342a49bb", GitTreeState:"clean"}
 			  
 	          Verify tiller pod is deployed on cluster.
-	          c:\>kubectl get pods -n kube-system -o wide | findstr tiller
+	          c:\>kubectl get pods -n kube-system -o wide 
 	          NAME                                 READY   STATUS    RESTARTS   AGE     IP             NODE         NOMINATED NODE   READINESS GATES
                   tiller-deploy-68cff9d9cb-9tn26       1/1     Running   6          5d10h   10.244.2.134   kubenode02   <none>           <none>
 			  
