@@ -24,15 +24,12 @@ DNS1=192.168.0.20         DNS1=192.168.0.20         DNS1=192.168.0.20          D
 DNS2=192.168.0.1          DNS2=192.168.0.1          DNS2=192.168.0.1           DNS2=192.168.0.1
 =========================================================================================================================================
 Add entries in /etc/resolv.conf on all nodes
-search devops.com
 nameserver 192.168.0.20
 nameserver 192.168.0.1
 =========================================================================================================================================
-Stop and disable NetworkManager, iptables, firewalld
+Stop and disable NetworkManager, firewalld
 systemctl stop NetworkManager
 systemctl disable NetworkManager
-systemctl stop iptables
-systemctl disable iptables
 systemctl stop firewalld
 systemctl disable firewalld
 =========================================================================================================================================
