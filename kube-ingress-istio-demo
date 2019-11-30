@@ -243,11 +243,16 @@ Table of content:
             kubectl get svc -n istio-system and edit grafana service to 'type=Loadbalancer'
             Login to istio grafana dashboard by adding dns A record for external IP assigned by metallb.
             http://grafana-istio.devops.com:3000
+	    
+     7.6.2 Setup prometheus in istio service mesh.
+           kubectl get svc -n istio-system and edit prometheus service to 'type=Loadbalancer'
+	   Login to istio prometheus dashboard by adding dns A record for external IP assigned by metallb.
+	   http://prometheus-istio.devops.com:9090
       
-      7.6.2 Setup kiali in istio service mesh.
-            kubectl get svc -n istio-system and edit kiali service to 'type=Loadbalancer'
-	    Login to istio kiali dashboard by adding dns A record for external IP assigned by metallb.
-	    http://kiali-istio.devops.com:20001
+     7.6.3 Setup kiali in istio service mesh.
+           kubectl get svc -n istio-system and edit kiali service to 'type=Loadbalancer'
+	   Login to istio kiali dashboard by adding dns A record for external IP assigned by metallb.
+	   http://kiali-istio.devops.com:20001
 	    
 ==========================================================================================================================================================================================
 ==========================================================================================================================================================================================
