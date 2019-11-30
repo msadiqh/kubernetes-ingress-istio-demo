@@ -10,7 +10,7 @@ Table of content:
 4  Configure NFS client provisioner to dynamically create PVs from default storage class.
 5  Configure MetalLB load-balancer for bare metal Kubernetes cluster.
 6  Configure kubernetes dashboard to manage cluster using GUI.
-7  Configure NGINX Ingress Controller and ISTIO service mesh for Kubernetes cluster.
+7  Configure NGINX Ingress Controller and ISTIO for Kubernetes cluster.
 8  Configure cluster monitoring using prometheus and grafana.
 9  Exposing services to be accessed outside the cluster using nginx ingress controller.
 10 Exposing cluster services to be accessed outside the cluster using ISTIO service mesh
