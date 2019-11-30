@@ -325,7 +325,7 @@ Bookinfo application:
 		 
   9.7 Create CNAME (bookinfo-nginx.devops.com) DNS entry for nginx ingress controller in dns server to access the application. 
 	
-  9.8 Access the application http://bookinfo-nginx.devops.com/productpage
+  9.8 Access the application http://bookinfo-nginx.devops.com/
 	
 ==========================================================================================================================================================================================
 ==========================================================================================================================================================================================
