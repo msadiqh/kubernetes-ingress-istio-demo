@@ -317,6 +317,7 @@ Bookinfo application:
   9.5 kubectl create namespace bookinfo-nginx
       git clone https://github.com/istio/istio.git
       cd istio kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml -n bookinfo-nginx
+      kubectl edit svc productpage -n bookinfo-nginx (change the service port 9080 to 80)
 		 
   9.6 create ingress resource to allow http traffic on port 80.
       kubectl apply -f bookinfo-ingress.yaml 
