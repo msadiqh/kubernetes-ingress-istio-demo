@@ -1,16 +1,79 @@
 NOTES:
 
+Grafana:
+
+1. Grafana is open source platform for data visualisation, monitoring and analysis.
+2. It is commonly used for visulaizing time series data for infrasture and application analytics.
+3. Grafana supports various datasources like Elastic search and influxDB, prometheus, MySQL etc
+4. Features include:
+   * open source
+   * Visualization
+   * Alerting
+   * Extended plugins
+   * collaboration
+   
+Prometheus:
+
+1.Prometheus is an open-source systems monitoring and alerting toolkit originally built at SoundCloud.
+2.Prometheus's main features are:
+
+  * A multi-dimensional data model with time series data identified by metric name and key/value pairs
+  * PromQL, a flexible query language to leverage this dimensionality
+  * time series collection happens via a pull model over HTTP
+  * pushing time series is supported via an intermediary gateway
+  * targets are discovered via service discovery or static configuration
+  * multiple modes of graphing and dashboarding support
+  
+Service Mesh:
+
+Service mesh is used to describe the network of microservices that make up such applications and the interactions between them. 
+As a service mesh grows in size and complexity, it can become harder to understand and manage. 
+Its requirements can include discovery, load balancing, failure recovery, metrics, and monitoring. 
+A service mesh also often has more complex operational requirements,
+like A/B testing, canary releases, rate limiting, access control, and end-to-end authentication.
+
+ISTIO:
+
+Istio makes it easy to create a network of deployed services with load balancing, service-to-service authentication, 
+monitoring, and more, with few or no code changes in service code.You add Istio support to services by deploying a 
+special sidecar proxy throughout your environment that intercepts all network communication between microservices, 
+then configure and manage Istio using its control plane functionality, which includes:
+
+Automatic load balancing for HTTP, gRPC, WebSocket, and TCP traffic.
+
+Fine-grained control of traffic behavior with rich routing rules, retries, failovers, and fault injection.
+
+A pluggable policy layer and configuration API supporting access controls, rate limits and quotas.
+
+Automatic metrics, logs, and traces for all traffic within a cluster, including cluster ingress and egress.
+
+Secure service-to-service communication in a cluster with strong identity-based authentication and authorization.
+
+Core features:
+* Traffic management
+8 Security
+* Policies
+* Observability
+
+KIALI:
+
+Kiali is an observability console for Istio with service mesh configuration capabilities. 
+It helps you to understand the structure of your service mesh by inferring the topology, and also provides the health of your mesh. 
+Kiali provides detailed metrics, and a basic Grafana integration is available for advanced queries. 
+Distributed tracing is provided by integrating Jaeger.
+
+=========================================================================================================================================================
 Scaling deployments: kubectl scale --replicas=0 deployment deployment-name -n namespace
 Generate traffic to bookinfo application using below command.
 watch curl -s -o /dev/null http://bookinfo-istio.devops.com
-=========================================================================================================================================
+=========================================================================================================================================================
 Add entries in /etc/hosts on all nodes
 #Kubernetes cluster nodes
 192.168.0.30    kubemaster.devops.com   kubemaster
 192.168.0.31    kubenode01.devops.com   kubenode01
 192.168.0.32    kubenode02.devops.com   kubenode02
 192.168.0.33    nfskubenode01.devops.com  nfskubenode01
-=========================================================================================================================================
+=========================================================================================================================================================
 Set static IP in /etc/sysconfig/network-scripts/ifcfg-ensxxx for kubemaster,kubenode01,kubenode02 and nfskubenode01
 
 TYPE=Ethernet             TYPE=Ethernet             TYPE=Ethernet              TYPE=Ethernet
@@ -22,17 +85,17 @@ GATEWAY=192.168.0.1       GATEWAY=192.168.0.1       GATEWAY=192.168.0.1        G
 DOMAIN=devops.com         DOMAIN=devops.com         DOMAIN=devops.com          DOMAIN=devops.com
 DNS1=192.168.0.20         DNS1=192.168.0.20         DNS1=192.168.0.20          DNS1=192.168.0.20
 DNS2=192.168.0.1          DNS2=192.168.0.1          DNS2=192.168.0.1           DNS2=192.168.0.1
-=========================================================================================================================================
+=========================================================================================================================================================
 Add entries in /etc/resolv.conf on all nodes
 nameserver 192.168.0.20
 nameserver 192.168.0.1
-=========================================================================================================================================
+=========================================================================================================================================================
 Stop and disable NetworkManager, firewalld
 systemctl stop NetworkManager
 systemctl disable NetworkManager
 systemctl stop firewalld
 systemctl disable firewalld
-=========================================================================================================================================
+=========================================================================================================================================================
 Have dns and domain setup in windows 2012 r2 server, configured with domain 'devops.com' and below dns entries.
 
 kubemaster	Host (A)	192.168.0.30	static
